@@ -1,26 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from 'react-apollo';
+import gql from 'graphql-tag';
+import SongTable from './components/SongTable';
+import EmbededSong from './components/EmbededSong';
+import TabDisplay from './components/TabDisplay';
+
+const client = new ApolloClient({
+  uri: "http://localhost:4000/graphql"
+});
 
 class App extends Component {
+  state = {
+      songEmbedURL: '',
+      tab: null,
+  }
+
+  onClickSong = (songEmbedURL) => {
+      this.setState({
+          songEmbedURL,
+      });
+  }
+
+  onClickTab = (tab) => {
+      this.setState({
+          tab,
+      });
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+     <ApolloProvider client={client}>
+        <div className="App">
+            <EmbededSong src={this.state.songEmbedURL} />
+            <TabDisplay tab={this.state.tab} />
+            <SongTable onClickSong={this.onClickSong} onClickTab={this.onClickTab} />
+        </div>
+      </ApolloProvider>
     );
   }
 }
