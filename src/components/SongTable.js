@@ -19,7 +19,7 @@ const songQuery = gql`
         youtubeURL
         lessonURL
         lyricsURL
-        spotifyEmbedLink
+        spotifyURL
         key
         notes
         tab
@@ -44,7 +44,7 @@ class SongTable extends Component {
           {({ loading, error, data }) => {
             if (loading) return <p>Loading...</p>;
             if (error) return <p>Error :( ({error.message})</p>;
-            const songs = data.songs
+            const songs = data.songs;
 
             return (
                 <Table>
@@ -63,7 +63,7 @@ class SongTable extends Component {
                               <TableCell>{song.artists}</TableCell>
                               <TableCell>
                                 <Button variant="outlined" onClick={() => onClickSong(song.youtubeURL)} disabled={!song.youtubeURL}>Youtube</Button>
-                                <Button variant="outlined" onClick={() => onClickSong(song.spotifyEmbedLink)} disabled={!song.spotifyEmbedLink}>Spotify</Button>
+                                <Button variant="outlined" onClick={() => onClickSong(song.spotifyURL)} disabled={!song.spotifyURL}>Spotify</Button>
                                 <Button variant="outlined" onClick={() => onClickAddPlay()}>Add</Button>
                               </TableCell>
                               <TableCell>
